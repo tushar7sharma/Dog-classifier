@@ -108,11 +108,22 @@ def load_data():
     print(dir_path)
     path = dir_path + "/train-set"
 
+
+    features_array = np.zeros((64*64*3, 2))
+    i = 0;
     for image_path in os.listdir(path):
         # create the full input path and read the file
-        input_path = os.path.join("/train-set", image_path)
-        print(input_path)
+        my_image = os.path.join(path, image_path)
+        my_label_y = [1]
+        fname = my_image
+        image = np.array(ndimage.imread(fname, flatten=False))
+        my_image = scipy.misc.imresize(image, size=(64,64)).reshape((64*64*3,1))
+        my_image = my_image/255
+        np.append(features_array, my_image, axis = 1)
+        print(np.array(my_image).shape)
+        i = i +1
     os.listdir(path)
+    print(np.array(features_array).shape)
     # my_image = "shortcuts.jpg" # change this to the name of your image file 
     # my_label_y = [1] # the true class of your image (1 -> cat, 0 -> non-cat)
     # fname = my_image
