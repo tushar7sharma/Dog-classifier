@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 import scipy
 from PIL import Image
 from scipy import ndimage
-from dnn_app_utils_v3 import *
+from helper import *
 
 # get_ipython().magic('matplotlib inline')
 plt.rcParams['figure.figsize'] = (5.0, 4.0) # set default size of plots
@@ -57,7 +57,7 @@ np.random.seed(1)
 
 # In[2]:
 
-train_x_orig, train_y, test_x_orig, test_y, classes = load_data()
+train_x_orig, train_y, test_x_orig, test_y = load_data()
 
 
 # The following code will show you an image in the dataset. Feel free to change the index and re-run the cell multiple times to see other images. 
@@ -65,9 +65,9 @@ train_x_orig, train_y, test_x_orig, test_y, classes = load_data()
 # In[3]:
 
 # Example of a picture
-index = 10
-plt.imshow(train_x_orig[index])
-print ("y = " + str(train_y[0,index]) + ". It's a " + classes[train_y[0,index]].decode("utf-8") +  " picture.")
+# index = 1
+# plt.imshow(train_x_orig[index])
+# print ("y = " + str(train_y[0,index]) + ". It's a " + classes[train_y[0,index]].decode("utf-8") +  " picture.")
 
 
 # In[4]:
@@ -511,7 +511,7 @@ pred_test = predict(test_x, test_y, parameters)
 
 # In[20]:
 
-print_mislabeled_images(classes, test_x, test_y, pred_test)
+# print_mislabeled_images(classes, test_x, test_y, pred_test)
 
 
 # **A few types of images the model tends to do poorly on include:** 
@@ -533,18 +533,18 @@ print_mislabeled_images(classes, test_x, test_y, pred_test)
 # In[ ]:
 
 ## START CODE HERE ##
-my_image = "my_image.jpg" # change this to the name of your image file 
-my_label_y = [1] # the true class of your image (1 -> cat, 0 -> non-cat)
-## END CODE HERE ##
+# my_image = "my_image.jpg" # change this to the name of your image file 
+# my_label_y = [1] # the true class of your image (1 -> cat, 0 -> non-cat)
+# ## END CODE HERE ##
 
-fname = "images/" + my_image
-image = np.array(ndimage.imread(fname, flatten=False))
-my_image = scipy.misc.imresize(image, size=(num_px,num_px)).reshape((num_px*num_px*3,1))
-my_image = my_image/255.
-my_predicted_image = predict(my_image, my_label_y, parameters)
+# fname = "images/" + my_image
+# image = np.array(ndimage.imread(fname, flatten=False))
+# my_image = scipy.misc.imresize(image, size=(num_px,num_px)).reshape((num_px*num_px*3,1))
+# my_image = my_image/255.
+# my_predicted_image = predict(my_image, my_label_y, parameters)
 
-plt.imshow(image)
-print ("y = " + str(np.squeeze(my_predicted_image)) + ", your L-layer model predicts a \"" + classes[int(np.squeeze(my_predicted_image)),].decode("utf-8") +  "\" picture.")
+# plt.imshow(image)
+# print ("y = " + str(np.squeeze(my_predicted_image)) + ", your L-layer model predicts a \"" + classes[int(np.squeeze(my_predicted_image)),].decode("utf-8") +  "\" picture.")
 
 
 # **References**:
