@@ -1,6 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
+import scipy
+from PIL import Image
+from scipy import ndimage
+import os
 
 
 def sigmoid(Z):
@@ -97,9 +101,32 @@ def load_data():
     
     train_set_y_orig = train_set_y_orig.reshape((1, train_set_y_orig.shape[0]))
     test_set_y_orig = test_set_y_orig.reshape((1, test_set_y_orig.shape[0]))
-    
+    print(train_set_x_orig.shape)
+    print(train_set_y_orig[0][4])
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    print(dir_path)
+    path = dir_path + "/train-set"
+
+    for image_path in os.listdir(path):
+        # create the full input path and read the file
+        input_path = os.path.join("/train-set", image_path)
+        print(input_path)
+    os.listdir(path)
+    # my_image = "shortcuts.jpg" # change this to the name of your image file 
+    # my_label_y = [1] # the true class of your image (1 -> cat, 0 -> non-cat)
+    # fname = my_image
+    # image = np.array(ndimage.imread(fname, flatten=False))
+    # my_image = scipy.misc.imresize(image, size=(64,64)).reshape((64*64*3,1))
+    # my_image = my_image/255.
+    # plt.imshow(image)
+    # print(my_image)
+    # print("------------------")
+    # print(np.array(my_image).shape)
+
     return train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes
 
+load_data()
 
 def initialize_parameters(n_x, n_h, n_y):
     """
