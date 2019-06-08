@@ -102,14 +102,17 @@ def load_data():
     train_set_y_orig = train_set_y_orig.reshape((1, train_set_y_orig.shape[0]))
     test_set_y_orig = test_set_y_orig.reshape((1, test_set_y_orig.shape[0]))
     print(train_set_x_orig.shape)
-    print(train_set_y_orig[0][4])
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    print(dir_path)
-    path = dir_path + "/train-set"
+    print(train_set_y_orig.shape)
+    TEST_SIZE = 40
+    TRAIN_SIZE = 160
+    
 
 
-    features_array = np.zeros((64*64*3, 2))
+    train_set_x_new = np.zeros((TRAIN_SIZE, 64*64*3))
+    train_set_y_new = np.zeros((1,TRAIN_SIZE))
+    path = dir_path + "/train-set/dog-train"
     i = 0;
     for image_path in os.listdir(path):
         # create the full input path and read the file
@@ -119,11 +122,70 @@ def load_data():
         image = np.array(ndimage.imread(fname, flatten=False))
         my_image = scipy.misc.imresize(image, size=(64,64)).reshape((64*64*3,1))
         my_image = my_image/255
-        np.append(features_array, my_image, axis = 1)
-        print(np.array(my_image).shape)
+        # np.append(train_set_x_new, my_image, axis = 1)
+        train_set_x_new[i] = my_image.T[0]
+        train_set_y_new[0,i] = 1;
+        # print(my_image.T[0])
+        # print(my_image.T.shape)
         i = i +1
-    os.listdir(path)
-    print(np.array(features_array).shape)
+
+
+    path = dir_path + "/train-set/notdog-train"
+    for image_path in os.listdir(path):
+        # create the full input path and read the file
+        my_image = os.path.join(path, image_path)
+        my_label_y = [1]
+        fname = my_image
+        image = np.array(ndimage.imread(fname, flatten=False))
+        my_image = scipy.misc.imresize(image, size=(64,64)).reshape((64*64*3,1))
+        my_image = my_image/255
+        # np.append(train_set_x_new, my_image, axis = 1)
+        train_set_x_new[i] = my_image.T[0]
+        train_set_y_new[0,i] = 0;
+        i = i +1
+
+    train_set_x_new = train_set_x_new.reshape((TRAIN_SIZE,64,64,3))
+
+
+
+    test_set_x_new = np.zeros((TEST_SIZE, 64*64*3))
+    test_set_y_new = np.zeros((1,TEST_SIZE))
+    path = dir_path + "/test-set/dog-test"
+    i = 0;
+    for image_path in os.listdir(path):
+        # create the full input path and read the file
+        my_image = os.path.join(path, image_path)
+        my_label_y = [1]
+        fname = my_image
+        image = np.array(ndimage.imread(fname, flatten=False))
+        my_image = scipy.misc.imresize(image, size=(64,64)).reshape((64*64*3,1))
+        my_image = my_image/255
+        # np.append(train_set_x_new, my_image, axis = 1)
+        test_set_x_new[i] = my_image.T[0]
+        test_set_y_new[0,i] = 1;
+        # print(my_image.T[0])
+        # print(my_image.T.shape)
+        i = i +1
+
+
+    path = dir_path + "/test-set/notdog-test"
+    for image_path in os.listdir(path):
+        # create the full input path and read the file
+        my_image = os.path.join(path, image_path)
+        my_label_y = [1]
+        fname = my_image
+        image = np.array(ndimage.imread(fname, flatten=False))
+        my_image = scipy.misc.imresize(image, size=(64,64)).reshape((64*64*3,1))
+        my_image = my_image/255
+        # np.append(train_set_x_new, my_image, axis = 1)
+        test_set_x_new[i] = my_image.T[0]
+        test_set_y_new[0,i] = 0;
+        i = i +1
+
+    test_set_x_new = test_set_x_new.reshape((TEST_SIZE,64,64,3))
+
+
+
     # my_image = "shortcuts.jpg" # change this to the name of your image file 
     # my_label_y = [1] # the true class of your image (1 -> cat, 0 -> non-cat)
     # fname = my_image
@@ -135,7 +197,7 @@ def load_data():
     # print("------------------")
     # print(np.array(my_image).shape)
 
-    return train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes
+    return train_set_x_new, train_set_y_new, test_set_x_new, test_set_y_new
 
 load_data()
 
